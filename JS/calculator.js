@@ -16,14 +16,14 @@ function Input_Digit(digit) {
 }
 
 function Input_Decimal(dot) {
-    if(Calculator_Reset.Wait_Second_Operand === true) return;           // Create the deciaml point function
-    if(!Calculator.Display_Value.includes(dot)) {
+    if (Calculator_Reset.Wait_Second_Operand === true) return;           // Create the deciaml point function
+    if (!Calculator.Display_Value.includes(dot)) {
         Calculator.Display_Value += dot;
     }
 }
 
 function Handle_Operator(Next_Operator) {
-    const { First_Operand, Display_Value, operator } = Calculator       // 
+    const { First_Operand, Display_Value, operator } = Calculator ;      // 
     const Value_of_Input = parseFloat(Display_Value);
     if (operator && Calculator.Wait_Second_Operand) {
         Calculator.operator = Next_Operator;
@@ -34,8 +34,8 @@ function Handle_Operator(Next_Operator) {
     } else if (operator) {
         const Value_Now = First_Operand || 0;
         let result = Perform_Calculation[operator] (Value_Now, Value_of_Input);         // 
-        result = Number(result) .toFixed(9)
-        result = (result * 1).toString()
+        result = Number(result).toFixed(9);
+        result = (result * 1).toString();
         Calculator.Display_Value = parseFloat(result);
         Calculator.First_Operand = parseFloat(result);
 
@@ -45,11 +45,11 @@ function Handle_Operator(Next_Operator) {
 }
 
 const Perform_Calculation = {
-    '/': (First_Operand, Second_Operand) => First_Operand / Second_Operand,
-    '*': (First_Operand, Second_Operand) => First_Operand * Second_Operand,
-    '+': (First_Operand, Second_Operand) => First_Operand + Second_Operand,
-    '-': (First_Operand, Second_Operand) => First_Operand - Second_Operand,         // Creates the operator functions
-    '=': (First_Operand, Second_Operand) => Second_Operand
+    '/' : (First_Operand, Second_Operand) => First_Operand / Second_Operand,
+    '*' : (First_Operand, Second_Operand) => First_Operand * Second_Operand,
+    '+' : (First_Operand, Second_Operand) => First_Operand + Second_Operand,
+    '-' : (First_Operand, Second_Operand) => First_Operand - Second_Operand,         // Creates the operator functions
+    '=' : (First_Operand, Second_Operand) => Second_Operand
 };
 
 function Calculator_Reset() {
@@ -71,16 +71,19 @@ keys.addEventListener('click', (event) => {
     if (!target.matches('button')) {
         return;
     }
+
     if (target.classList.contains('operator')) {
         Handle_Operator(target.value);
         Update_Display();
         return;
     }
+
     if (target.classList.contains('decimal')) {
         Input_Decimal(target.value);
         Update_Display();
         return;
     }
+
     if (target.classList.contains('all-clear')) {                   // linking JS to html created keys
         Calculator_Reset();
         Update_Display();
@@ -89,4 +92,4 @@ keys.addEventListener('click', (event) => {
 
     Input_Digit(target.value);
     Update_Display();
-})
+});
